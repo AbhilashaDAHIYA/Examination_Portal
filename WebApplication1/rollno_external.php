@@ -119,7 +119,7 @@ if($obj[5] == 'CSE')
                        <td><?php printf("%d",$index++) ?></td>
                        <td><?php printf("%s ", $row['rollno']); ?> </td> 
                        <td>60</td>
-                       <td><input type="number" name="marks[]"></td> 
+                       <td><input type="number" min="1" max="60" name="marks[]"></td> 
                      </tr> 
                     <?php
                 }

@@ -140,7 +140,7 @@
                        <td><?php printf("%d",$index++) ?></td>
                        <td><?php printf("%s ", $row['rollno']); ?> </td> 
                        <td>30</td>
-                       <td><input type="number" name="marks[]"></td> 
+                       <td><input type="number" min="1" max="30" name="marks[]"></td> 
                      </tr> 
                     <?php
                 }
