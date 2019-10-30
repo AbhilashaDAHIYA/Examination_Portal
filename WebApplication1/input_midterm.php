@@ -20,9 +20,18 @@
 			$marks = $_POST['marks'];
             //$res = mysqli_query("SELECT * FROM `".$table."` WHERE 1",$con);
             $colname = "MTT" . "$index";
-            $i = 1;
-            foreach( $marks as $key => $n ){
-            	$res = "UPDATE `".$table."` SET  ".$colname." = '".$n."' WHERE serialno = '$i'";
+
+            $query = "SELECT rollno FROM `".$table."` WHERE 1";
+            $result1 = mysqli_query($con,$query);
+            
+            $j=0;
+            $count = count($marks);
+            //foreach( $marks as $key => $n )
+            while($j < $count  && $row = mysqli_fetch_assoc($result1)){
+            	$n = $marks[$j];
+                $rollno = $row['rollno'];
+            	$res = "UPDATE `".$table."` SET  ".$colname." = '".$n."' WHERE rollno = '$rollno'";
+            
             	$result = mysqli_query($con,$res);
 
             	if( $result == false )
@@ -31,7 +40,7 @@
             		header('location: rollno_midterm.php');
 
             	}
-            	$i+=1;
+            	$j+=1;
             	//echo $i;
             }
 			//echo 'success';
