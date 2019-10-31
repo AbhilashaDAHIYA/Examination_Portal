@@ -74,7 +74,7 @@ th {
 	</tr>
     </center>
 <?php 
-
+  header( "refresh:0");
  session_start();
 $con = mysqli_connect('localhost','root','','student');
 //mysqli_select_db($con,'assessmentportal');
