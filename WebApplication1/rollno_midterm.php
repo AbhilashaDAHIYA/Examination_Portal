@@ -111,7 +111,7 @@
          $_SESSION['Branch'] =$obj[5];
          $_SESSION['Sem'] =$obj[6];
         $mysql_tb = $code.$sem.$year;
-		echo $mysql_tb;
+		//echo $mysql_tb;
         $index = 1;  //for S.No.
     
       //getting the subject column
