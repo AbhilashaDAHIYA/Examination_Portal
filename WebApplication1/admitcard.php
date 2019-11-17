@@ -78,10 +78,11 @@ while($obj = mysqli_fetch_row($result))
 {    $fieldcount = mysqli_num_fields($result);
 
       while($i < $fieldcount - 4)
-	     {   $subcode = $obj[$i] ;
+	     {  if($obj[$i] != NULL)   
+       { $subcode = $obj[$i] ;
 	     	 $sub = $obj[$i+1];
 	     	 $pdf->Cell(50,10,$subcode,1,0);
-	     	 $pdf->Cell(0,10,$sub,1,1);
+	     	 $pdf->Cell(0,10,$sub,1,1);}
              
              $i+=10;
              
