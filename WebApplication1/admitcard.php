@@ -1,23 +1,38 @@
 <?php
 
 session_start();
-$con = mysqli_connect('localhost','root','root','assessmentportal');
+$con = mysqli_connect('localhost','root','','student');
 //mysqli_select_db($con,'assessmentportal');
 if($con === false) 
 {
 	die("ERROR:Could not connect.".mysqli_connect_error());
 }
 
-$rollno = $_SESSION['rollno'];    //roll no of the student
+$rollno = $_SESSION['username'];    //roll no of the student
 
 		$sql =  "SELECT * FROM `register` WHERE  Enrollment_No = '$rollno' ";
             $result = mysqli_query($con,$sql);
             $obj = mysqli_fetch_row($result); 
-            $code = '20'.'_';
+            if($obj[4] == 'CSE')
+                    { if( $rollno <= '07001012019'){
+                             $code = '20'.'_';
+                            }else{
+                                $code = '21'.'_';}
+                    }
+                                else if($obj[4] == 'IT')
+                                { if( $rollno <= '07001012019'){
+                             $code = '22'.'_';
+                            }else{
+                                $code = '23'.'_';}
+                    }
+                                else if($obj[4] == 'ECE')
+                                 $code = '24'.'_';
+                                else if($obj[4] == 'MECH')
+                                 $code = '25'.'_';
             $sem = $obj[5].'_';
             $year = $obj[6];
            //$subcode = $obj[2];
-$mysql_tb = $code.$sem.$year;   // database name
+        $mysql_tb = $code.$sem.$year;   // database name
             // query to be run again to fetch values
             $sql =  "SELECT * FROM `register` WHERE  Enrollment_No = '$rollno' ";
             $result = mysqli_query($con,$sql);

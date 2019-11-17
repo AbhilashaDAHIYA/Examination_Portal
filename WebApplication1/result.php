@@ -118,7 +118,7 @@ if($con === false)
            //$subcode = $obj[2];
         $mysql_tb = $code.$sem.$year;
 		//$mysql_tb = $code.$sem.$year;
-		echo $mysql_tb;
+		//echo $mysql_tb;
 		$query = "SELECT * FROM `".$mysql_tb."` WHERE rollno = '$rollno' ";
         $result = mysqli_query($con,$query);
 
