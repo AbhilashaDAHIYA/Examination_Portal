@@ -30,7 +30,25 @@ $_SESSION['paper'] = 'paper.php';
             <li><a href="#">Home</a></li>
             <li><a href="paper.php">Display Papers</a></li>
             <li><a href="#contact">Attendance</a></li>
+            <?php 
+
+            $name = "admin";
+             $query = "SELECT * FROM `admin` WHERE  Name='$name' ";
+             $results = mysqli_query($db, $query);
+             $row=mysqli_fetch_assoc($results);
+             if($row['Checked'] == 0)
+             { ?>
             <li><a href="result.php">Results</a></li>
+            <?php
+              } 
+              else
+              {
+                ?>
+            <li><a href="final_result.php">Results</a></li>
+            <?php
+              }
+            ?>
+
             <li><a href="#about">Notifications</a></li>
         </ul>
     </div>

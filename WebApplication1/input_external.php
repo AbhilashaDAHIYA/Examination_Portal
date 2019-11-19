@@ -20,6 +20,9 @@
 			$marks = $_POST['marks'];
             //$res = mysqli_query("SELECT * FROM `".$table."` WHERE 1",$con);
             $colname = "ET" . "$index";
+             $col = "Internal"."$index";
+            $col2 = "total"."$index";
+ 
             $query = "SELECT rollno FROM `".$table."` WHERE 1";
             $result1 = mysqli_query($con,$query);
             
@@ -38,6 +41,17 @@
             		header('location: rollno_midterm.php');
 
             	}
+              
+               $q = "SELECT * FROM `".$table."` WHERE rollno = '$rollno'";
+                 $r = mysqli_query($con,$q);
+                 $r1=mysqli_fetch_assoc($r);
+                 $num1 = $r1[$col];
+                 $num2 = $r1[$colname];
+                 $sum = $num1 + $num2;
+                 $res = "UPDATE `".$table."` SET  ".$col2." = '".$sum."' WHERE rollno = '$rollno'";
+            	$result = mysqli_query($con,$res);
+
+
             	$j+=1;
             	//echo $i;
             }
