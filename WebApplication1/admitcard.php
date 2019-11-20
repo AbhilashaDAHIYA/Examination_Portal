@@ -13,22 +13,41 @@ $rollno = $_SESSION['username'];    //roll no of the student
 		$sql =  "SELECT * FROM `register` WHERE  Enrollment_No = '$rollno' ";
             $result = mysqli_query($con,$sql);
             $obj = mysqli_fetch_row($result); 
-            if($obj[4] == 'CSE')
+            if($obj[3] == 'B.Tech')
+            {
+                    if($obj[4] == 'CSE')
                     { if( $rollno <= '07001012019'){
                              $code = '20'.'_';
                             }else{
                                 $code = '21'.'_';}
                     }
-                                else if($obj[4] == 'IT')
+                    else if($obj[4] == 'IT')
                                 { if( $rollno <= '07001012019'){
                              $code = '22'.'_';
                             }else{
                                 $code = '23'.'_';}
                     }
-                                else if($obj[4] == 'ECE')
+                    else if($obj[4] == 'ECE')
                                  $code = '24'.'_';
-                                else if($obj[4] == 'MECH')
+                    else if($obj[4] == 'MECH')
                                  $code = '25'.'_';
+            }
+            else if($obj[3] == 'BBA'){
+                                    $code = '27'.'_';
+            }else if($obj[3] == 'MCA'){
+                                    $code = '28'.'_';
+            }else if($obj[3] == 'M.Tech'){
+                                    if($obj[4] == 'CSE'){
+                                        $code = '29'.'_';
+                                    }else if($obj[4] == 'IT'){
+                                        $code = '30'.'_';
+                                    }else if($obj[4] == 'ECE'){
+                                         $code = '31'.'_';
+                                    }else{
+                                         $code = '32'.'_';
+                                    }
+            }
+
             $sem = $obj[5].'_';
             $year = $obj[6];
            //$subcode = $obj[2];

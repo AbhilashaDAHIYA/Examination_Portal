@@ -86,22 +86,40 @@
         $sql =  "SELECT * FROM `faculty1` WHERE  serialno = '$subid' ";
             $result = mysqli_query($con,$sql);
             $obj = mysqli_fetch_row($result);
-                               if($obj[5] == 'CSE')
-								    { if( $obj[9] <= '07001012019'){
-					                   $code = '20'.'_';
-						                }else{
-					                      $code = '21'.'_';}
-								    }
-                                else if($obj[5] == 'IT')
+                              if($obj[4] == 'B.Tech')
+            {      
+                    if($obj[5] == 'CSE')
+                    { if( $obj[9] <= '07001012019'){
+                             $code = '20'.'_';
+                            }else{
+                                $code = '21'.'_';}
+                    }
+                    else if($obj[5] == 'IT')
                                 { if( $obj[9] <= '07001012019'){
-					                   $code = '22'.'_';
-						                }else{
-					                      $code = '23'.'_';}
-								    }
-                                else if($obj[5] == 'ECE')
+                             $code = '22'.'_';
+                            }else{
+                                $code = '23'.'_';}
+                    }
+                    else if($obj[5] == 'ECE')
                                  $code = '24'.'_';
-                                else if($obj[5] == 'MECH')
+                    else if($obj[5] == 'MECH')
                                  $code = '25'.'_';
+            }
+            else if($obj[4] == 'BBA'){
+                                    $code = '27'.'_';
+            }else if($obj[4] == 'MCA'){
+                                    $code = '28'.'_';
+            }else if($obj[4] == 'M.Tech'){
+                                    if($obj[5] == 'CSE'){
+                                        $code = '29'.'_';
+                                    }else if($obj[5] == 'IT'){
+                                        $code = '30'.'_';
+                                    }else if($obj[5] == 'ECE'){
+                                         $code = '31'.'_';
+                                    }else{
+                                         $code = '32'.'_';
+                                    }
+            }
             $sem = $obj[6].'_';
             $year = $obj[10];
         $subcode = $obj[2];
