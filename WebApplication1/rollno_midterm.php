@@ -88,7 +88,7 @@
              $sql =  "SELECT * FROM `faculty1` WHERE  serialno = '$subid' ";
             $result = mysqli_query($con,$sql);
             $obj = mysqli_fetch_row($result);
-                if($obj[4] == 'B.Tech')
+            if($obj[4] == 'B.Tech')
             {      
                     if($obj[5] == 'CSE')
                     { if( $obj[9] <= '07001012019'){
@@ -106,7 +106,8 @@
                                  $code = '24'.'_';
                     else if($obj[5] == 'MECH')
                                  $code = '25'.'_';
-            }
+            }else if($obj[4] == 'B.Arch'){
+                                    $code = '26'.'_';}
             else if($obj[4] == 'BBA'){
                                     $code = '27'.'_';
             }else if($obj[4] == 'MCA'){
@@ -125,15 +126,18 @@
             $sem = $obj[6].'_';
             $year = $obj[10];
         $subcode = $obj[2];
+
          $_SESSION['SubCode'] =$subcode;         //to be used to update in faculty colmn midterm 0/1
          $_SESSION['Branch'] =$obj[5];
          $_SESSION['Sem'] =$obj[6];
+         $_SESSION['Course'] = $obj[4];
         $mysql_tb = $code.$sem.$year;
-		//echo $mysql_tb;
+		echo $mysql_tb;
+    echo $_SESSION['Course']; 
         $index = 1;  //for S.No.
     
       //getting the subject column
-      $query = "SELECT * FROM `".$mysql_tb."` WHERE serialno = '1' ";
+      $query = "SELECT * FROM `".$mysql_tb."` WHERE 1 "; //serialno = '1'
         $result = mysqli_query($con,$query);
         $i = 2;
        while( $obj1 = mysqli_fetch_row($result))
@@ -162,8 +166,24 @@
                      <tr  style="background-color:grey; text-align:center;" >
                        <td><?php printf("%d",$index++) ?></td>
                        <td><?php printf("%s ", $row['rollno']); ?> </td> 
+                      <?php  $query1 = "SELECT * FROM `papers` WHERE Code = '$subcode' ";
+                               $result1 = mysqli_query($con,$query1);
+                              $row1 = mysqli_fetch_assoc($result1); 
+                       if($_SESSION['Course'] == 'B.Arch')
+                       { if($row1['L']!=0){
+                        ?> <td>30</td>
+                       <td><input type="number" min="1" max="30" name="marks[]"></td> 
+                          <?php }
+                          else if($row1['P']!=0){
+                            ?>
+                          <td>35</td>
+                            <td><input type="number" min="1" max="35" name="marks[]"></td>
+                            <?php }
+                       }
+                       else { ?>
                        <td>30</td>
                        <td><input type="number" min="1" max="30" name="marks[]"></td> 
+                     <?php } ?>
                      </tr> 
                     <?php
                 }

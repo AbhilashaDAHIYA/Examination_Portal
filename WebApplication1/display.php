@@ -36,7 +36,7 @@
   <tr style="background-color:green;">
     <th style="font:50px;">S.No.</th>
     <th>RollNo. </th>
-    <th>Marks Obtainde(Out of 40)</th>
+    <th>Marks Obtainded</th>
    <!--  <th>Grades Obtained</th> -->
    </tr>
    
@@ -62,7 +62,7 @@
         $sql =  "SELECT * FROM `faculty1` WHERE  serialno = '$subid' ";
             $result = mysqli_query($con,$sql);
             $obj = mysqli_fetch_row($result);
-                             if($obj[4] == 'B.Tech')
+                            if($obj[4] == 'B.Tech')
             {      
                     if($obj[5] == 'CSE')
                     { if( $obj[9] <= '07001012019'){
@@ -80,7 +80,8 @@
                                  $code = '24'.'_';
                     else if($obj[5] == 'MECH')
                                  $code = '25'.'_';
-            }
+            }else if($obj[4] == 'B.Arch'){
+                                    $code = '26'.'_';}
             else if($obj[4] == 'BBA'){
                                     $code = '27'.'_';
             }else if($obj[4] == 'MCA'){
@@ -103,6 +104,7 @@
          $_SESSION['SubCode'] =$subcode;         //to be used to update in faculty colmn midterm 0/1
               $_SESSION['Branch'] =$obj[5];
               $_SESSION['Sem'] =$obj[6];
+               $_SESSION['Course'] = $obj[4];
         $mysql_tb = $code.$sem.$year;
         $index = 1;  //for S.No.
       
@@ -139,10 +141,19 @@
                        <td><?php printf("%d",$index++) ?></td>
                        <td><?php printf("%s ", $row['rollno']); ?> </td>  
                        <?php  $rollno = $row['rollno'];
+
                         $sql = "SELECT * FROM `".$mysql_tb."` WHERE rollno = $rollno ";
                          $result1 = mysqli_query($con,$sql);
                           $obj1 = mysqli_fetch_row($result1);
-                               if($row1['P'] != 0) 
+                              if($_SESSION['Course'] == 'B.Arch')
+                              {
+                                   $sum = $obj1[$i+3] + $obj1[$i+4];
+                                      $res2 = "UPDATE `".$mysql_tb."` SET  ".$colname." = '".$sum."' WHERE rollno = $rollno";
+                                     $result2 = mysqli_query($con,$res2);
+                              }
+                              else
+                              {
+                                 if($row1['P'] != 0) 
                                {
                                       $sum = $obj1[$i+3] + (int)(($obj1[$i+4])/2)+ (int)(($obj1[$i+5])/2);
                                       $res2 = "UPDATE `".$mysql_tb."` SET  ".$colname." = '".$sum."' WHERE rollno = $rollno";
@@ -154,7 +165,9 @@
                                   $res2 = "UPDATE `".$mysql_tb."` SET  ".$colname." = '".$sum."' WHERE rollno = $rollno";
                                      $result2 = mysqli_query($con,$res2);
                                      
-                                } ?>
+                                } 
+                              }
+                                ?>
                         <td><?php printf("%d ", $sum); ?> </td> 
                         <!-- <td><?php printf("%s ", $obj1[$i+8]); ?> </td>  -->
                      </tr> 

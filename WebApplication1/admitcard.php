@@ -31,7 +31,8 @@ $rollno = $_SESSION['username'];    //roll no of the student
                                  $code = '24'.'_';
                     else if($obj[4] == 'MECH')
                                  $code = '25'.'_';
-            }
+            }else if($obj[3] == 'B.Arch'){
+                                    $code = '26'.'_';}
             else if($obj[3] == 'BBA'){
                                     $code = '27'.'_';
             }else if($obj[3] == 'MCA'){

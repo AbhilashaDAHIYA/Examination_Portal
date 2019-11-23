@@ -57,8 +57,8 @@ th {
 	</li>
 	<li style="float:right;"><a href="front.php?logout='1'">LogOut</a></li>
 </ul>
-   <div>
-   <table width="1065" align="center">
+   
+   <!-- <table width="1065" align="center">
      <tr align="center">
 	</tr>
 	<center>
@@ -72,11 +72,11 @@ th {
         <th style="color:white;width:100px;text-align:center;">Internal marks</th>
 	</tr>
 	</tr>
-    </center>
+    </center> -->
 <?php 
-  header( "refresh:0");
+  //header( "refresh:0");
  session_start();
-$con = mysqli_connect('localhost','root','','student');
+$con = mysqli_connect('localhost','root','root','student');
 //mysqli_select_db($con,'assessmentportal');
 if($con === false) 
 {
@@ -93,11 +93,13 @@ if($con === false)
            //$code = $obj[$subid+2].'_';
           //$sem = $obj[$subid+3].'_';
           //$year = $obj[$subid+4];
+
+            
 		  $rollno = $_SESSION['username'];
 		$sql =  "SELECT * FROM `register` WHERE  Enrollment_No = '$rollno' ";
             $result = mysqli_query($con,$sql);
             $obj = mysqli_fetch_row($result); 
-            if($obj[3] == 'B.Tech')
+if($obj[3] == 'B.Tech')
             {
                     if($obj[4] == 'CSE')
                     { if( $rollno <= '07001012019'){
@@ -115,6 +117,8 @@ if($con === false)
                                  $code = '24'.'_';
                     else if($obj[4] == 'MECH')
                                  $code = '25'.'_';
+            }else if($obj[3] == 'B.Arch'){
+                                    $code = '26'.'_';
             }
             else if($obj[3] == 'BBA'){
                                     $code = '27'.'_';
@@ -134,16 +138,233 @@ if($con === false)
 
             $sem = $obj[5].'_';
             $year = $obj[6];
+             $branch  =  $obj[3];
            //$subcode = $obj[2];
         $mysql_tb = $code.$sem.$year;
 		//$mysql_tb = $code.$sem.$year;
+
 		//echo $mysql_tb;
+
+if($branch == 'B.Arch')
+{       
+         ?>     <!-- theory table -->
+         <h3> Theory </h3>
+        <table width="1065" align="center">
+     <tr align="center">
+  </tr>
+  <center>
+  <tr align="center" bgcolor="green" height="30px" >
+    <th style="color:white;width:60px;text-align:center;">S.No</th>
+    <th style="color:white;width:100px;text-align:center;" >Paper Code</th>
+    <th style="color:white;width:300px;text-align:center;">Subject</th>
+    <th style="color:white;width:100px;text-align:center;">Mid Term</th>
+    <th style="color:white;width:100px;text-align:center;">Faculty assessment</th>
+    <th style="color:white;width:100px;text-align:center;">Internal total</th>
+  </tr>
+  </tr>
+    </center>
+    <?php
+        $query = "SELECT * FROM `".$mysql_tb."` WHERE rollno = '$rollno' ";
+        $result = mysqli_query($con,$query);
+
+    $index = 1;  //for S.No.
+    $i = 2; 
+    
+    
+while($obj = mysqli_fetch_row($result))
+{  
+    $fieldcount = mysqli_num_fields($result);
+
+      while($i < $fieldcount - 4)
+       {  //printf("%s \t %s \t %s ",$obj[$i],$obj[$i+1],$obj[$i+3]);   statemnt that prints the diif column values
+      //echo '<br />';
+          $subjectcode = $obj[$i];
+          $query1 = "SELECT * FROM `papers` WHERE Code = '$subjectcode' ";
+                       $result1 = mysqli_query($con,$query1);
+                          $row1 = mysqli_fetch_assoc($result1);
+           if($row1['L']!=0) {              
+            ?>  
+                 <br>
+                     <tr>
+                              <td><?php  printf("%d",$index++); ?></td>
+                               <td><?php  printf("%s",$obj[$i]); ?></td>
+                               <td><?php  printf("%s",$obj[$i+1]); ?></td>
+                               <td><?php 
+                                   if($obj[$i+4] == 0)
+                                    printf("","");
+                                  else
+                                    printf("%d",$obj[$i+4]);
+                                     ?></td>
+               
+                              <td><?php  if($obj[$i+3] == 0)
+                                    printf("","");
+                                  else
+                                    printf("%d",$obj[$i+3]);?></td>
+                              <td><?php  if($obj[$i+7] == 0)
+                                printf("","");
+                              else
+                                printf("%d",$obj[$i+7]); ?></td>
+                
+                       </tr> 
+                   
+            <?php
+          }
+       $i+=10;
+        }
+}
+?>    
+</table>
+
+
+ <!-- practical table -->
+  <h3> Practical </h3>
+        <table width="1065" align="center">
+     <tr align="center">
+  </tr>
+  <center>
+  <tr align="center" bgcolor="green" height="30px" >
+    <th style="color:white;width:60px;text-align:center;">S.No</th>
+    <th style="color:white;width:100px;text-align:center;" >Paper Code</th>
+    <th style="color:white;width:300px;text-align:center;">Subject</th>
+    <th style="color:white;width:100px;text-align:center;">CAP</th>
+    <th style="color:white;width:100px;text-align:center;">MTEP</th>
+    <th style="color:white;width:100px;text-align:center;">Internal Total</th>
+  </tr>
+  </tr>
+    </center>
+    <?php
+        $query = "SELECT * FROM `".$mysql_tb."` WHERE rollno = '$rollno' ";
+        $result = mysqli_query($con,$query);
+
+    $index = 1;  //for S.No.
+    $i = 2; 
+    
+    
+while($obj = mysqli_fetch_row($result))
+{  
+    $fieldcount = mysqli_num_fields($result);
+
+      while($i < $fieldcount - 4)
+       {  //printf("%s \t %s \t %s ",$obj[$i],$obj[$i+1],$obj[$i+3]);   statemnt that prints the diif column values
+      //echo '<br />';
+          $subjectcode = $obj[$i];
+          $query1 = "SELECT * FROM `papers` WHERE Code = '$subjectcode' ";
+                       $result1 = mysqli_query($con,$query1);
+                          $row1 = mysqli_fetch_assoc($result1);
+           if($row1['P']!=0) {              
+            ?>  
+                 <br>
+                     <tr>
+                              <td><?php  printf("%d",$index++); ?></td>
+                               <td><?php  printf("%s",$obj[$i]); ?></td>
+                               <td><?php  printf("%s",$obj[$i+1]); ?></td>
+                               <td><?php 
+                                   if($obj[$i+4] == 0)
+                                    printf("","");
+                                  else
+                                    printf("%d",$obj[$i+4]);
+                                     ?></td>
+               
+                              <td><?php  if($obj[$i+3] == 0)
+                                    printf("","");
+                                  else
+                                    printf("%d",$obj[$i+3]);?></td>
+                              <td><?php  if($obj[$i+7] == 0)
+                                printf("","");
+                              else
+                                printf("%d",$obj[$i+7]); ?></td>
+                
+                       </tr> 
+                   
+            <?php
+          }
+       $i+=10;
+        }
+}
+?>
+</table>
+<!-- practical table -->
+  <h3> Studio </h3>
+        <table width="1065" align="center">
+     <tr align="center">
+  </tr>
+  <center>
+  <tr align="center" bgcolor="green" height="30px" >
+    <th style="color:white;width:60px;text-align:center;">S.No</th>
+    <th style="color:white;width:100px;text-align:center;" >Paper Code</th>
+    <th style="color:white;width:300px;text-align:center;">Subject</th>
+    <th style="color:white;width:100px;text-align:center;">CAS</th>
+   
+  </tr>
+  </tr>
+    </center>
+    <?php
+        $query = "SELECT * FROM `".$mysql_tb."` WHERE rollno = '$rollno' ";
+        $result = mysqli_query($con,$query);
+
+    $index = 1;  //for S.No.
+    $i = 2; 
+    
+    
+while($obj = mysqli_fetch_row($result))
+{  
+    $fieldcount = mysqli_num_fields($result);
+
+      while($i < $fieldcount - 4)
+       {  //printf("%s \t %s \t %s ",$obj[$i],$obj[$i+1],$obj[$i+3]);   statemnt that prints the diif column values
+      //echo '<br />';
+          $subjectcode = $obj[$i];
+          $query1 = "SELECT * FROM `papers` WHERE Code = '$subjectcode' ";
+                       $result1 = mysqli_query($con,$query1);
+                          $row1 = mysqli_fetch_assoc($result1);
+           if($row1['P']!=0) {              
+            ?>  
+                 <br>
+                     <tr>
+                              <td><?php  printf("%d",$index++); ?></td>
+                               <td><?php  printf("%s",$obj[$i]); ?></td>
+                               <td><?php  printf("%s",$obj[$i+1]); ?></td>
+                               
+                              <td><?php  if($obj[$i+7] == 0)
+                                printf("","");
+                              else
+                                printf("%d",$obj[$i+7]); ?></td>
+                
+                       </tr> 
+                   
+            <?php
+          }
+       $i+=10;
+        }
+}
+ 
+}
+else{
+
+        ?>
+        <table width="1065" align="center">
+     <tr align="center">
+  </tr>
+  <center>
+  <tr align="center" bgcolor="green" height="30px" >
+    <th style="color:white;width:60px;text-align:center;">S.No</th>
+    <th style="color:white;width:100px;text-align:center;" >Paper Code</th>
+    <th style="color:white;width:300px;text-align:center;">Subject</th>
+    <th style="color:white;width:100px;text-align:center;">Mid Term</th>
+    <th style="color:white;width:100px;text-align:center;">Practical</th>
+    <th style="color:white;width:100px;text-align:center;">Faculty assessment</th>
+        <th style="color:white;width:100px;text-align:center;">Internal marks</th>
+  </tr>
+  </tr>
+    </center>
+    <?php
 		$query = "SELECT * FROM `".$mysql_tb."` WHERE rollno = '$rollno' ";
         $result = mysqli_query($con,$query);
 
 		$index = 1;  //for S.No.
 		$i = 2; 
 		
+    
 while($obj = mysqli_fetch_row($result))
 {  
     $fieldcount = mysqli_num_fields($result);
@@ -191,9 +412,11 @@ while($obj = mysqli_fetch_row($result))
 }
 
 mysqli_free_result($result);
+}
     ?>
+
 </table>
-</div>
+
 <!-- <footer>
 <div id="last" >
   <h3 style="color: white">Copyright of IGDTUW</h3>
