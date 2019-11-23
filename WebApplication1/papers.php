@@ -117,10 +117,14 @@ mysqli_free_result($result);
          while($row = mysqli_fetch_assoc($result))
          {    $i =  $row['serialno'];
                $code = $row['SubCode'];
+               $course = $row['Course'];
+              // echo $course;
                $query1 = "SELECT * FROM `papers` WHERE Code = '$code' ";
                 $result1 = mysqli_query($con,$query1);
                   $row1 = mysqli_fetch_assoc($result1);
         
+           if($course != 'B.Arch')
+           {
            ?> <table  style=" position:relative; left:50px; width:80%; margin-top:50px; text-align:center;">
            <tr style="background-color:green;">
                   <th style="font:50px;">Subject Code</th>
@@ -159,6 +163,67 @@ mysqli_free_result($result);
            </tr>
          </table>
          <?php 
+         }
+         else
+         { 
+            ?> <table  style=" position:relative; left:50px; width:80%; margin-top:50px; text-align:center;">
+           <tr style="background-color:green;">
+                  <th style="font:50px;">Subject Code</th>
+                  <th>Subject Name </th>
+                  <th>Department</th>
+                  <th>Semester</th>
+                  <th>Roll No</th>
+                  <?php  if($row1['L'] != 0) { ?>
+                       <th>Mid Term</th>
+                       <th>Faculty Assessment</th>
+                       <th>Internal Evaluation</th>
+                       <?php } ?>
+                  <?php  if($row1['T'] != 0) { ?>
+                       <th>Internal </th>
+                       <?php } ?>
+                  <?php  if($row1['P'] != 0) { ?>
+                       <th>CAP</th>
+                       <th>MTEP</th>
+                       <th>Internal</th>
+                       <?php } ?>    
+                   <th>External</th>     
+
+          </tr>
+  
+           <tr>
+            <td><?php printf("%s ", $row['SubCode']); ?></td>
+            <td><?php printf("%s ", $row['SubName']); ?></td>
+            <td><?php printf("%s ", $row['Course']); ?></td>
+            <td><?php printf("%s ", $row['Sem']); ?></td>
+            <td><?php printf("%s To %s ", $row['RangeStart'],$row['RangeEnd']); ?></td>
+            <?php  if($row1['L'] != 0) { ?>
+                       <td><a href='rollno_midterm.php?id=<?=$i?>'>Mid Term</a></td>
+            <td><a href='rollno_fa.php?id=<?=$i?>'>Faculty Assessment</a></td> 
+            <td><a href='display.php?id=<?=$i?>'>Internal Evaluation</a></td> 
+                       <?php } ?>
+            <!-- <td><a href='rollno_midterm.php?id=<?=$i?>'>Mid Term</a></td>
+            <td><a href='rollno_fa.php?id=<?=$i?>'>Faculty Assessment</a></td>  -->
+                  <!-- <?php if($row1['P'] != 0) { ?>            
+            <td><a href='rollno_practical.php?id=<?=$i?>'>Practical</a></td>
+                   <?php 
+                 } ?> -->
+               <?php  if($row1['T'] != 0) { ?>
+                       <td><a href='rollno_internal.php?id=<?=$i?>'>Internal Marks</a></td> 
+                       <?php } ?>  
+                <?php  if($row1['P'] != 0) { ?>
+                       <td><a href='rollno_midterm.php?id=<?=$i?>'>CAP</a></td>
+            <td><a href='rollno_fa.php?id=<?=$i?>'>MTEP</a></td> 
+            <td><a href='display.php?id=<?=$i?>'>Internal Evaluation</a></td>
+                       <?php } ?> 
+        <!--   <td><a href='rollno_grades.php?id=<?=$i?>'>Grades</a></td>
+           <td><a href='display.php?id=<?=$i?>'>Internal Evaluation</a></td>   -->
+           <td><a href='rollno_external.php?id=<?=$i?>'>External</a></td>  
+
+           </tr>
+         </table>
+         <?php
+         }
+
          }
 
 
