@@ -132,8 +132,8 @@
          $_SESSION['Sem'] =$obj[6];
          $_SESSION['Course'] = $obj[4];
         $mysql_tb = $code.$sem.$year;
-		echo $mysql_tb;
-    echo $_SESSION['Course']; 
+		//echo $mysql_tb;
+    //echo $_SESSION['Course']; 
         $index = 1;  //for S.No.
     
       //getting the subject column

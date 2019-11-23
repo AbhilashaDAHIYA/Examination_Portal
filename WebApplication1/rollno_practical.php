@@ -9,7 +9,7 @@
 
          $subid = $_GET['id'];
        //echo $subid;
-       $name = $_SESSION['Name']; 
+       $name = $_SESSION['username']; 
        $query = "SELECT * FROM `faculty1` WHERE  Name = '$name' && serialno = '$subid'";
         $result = mysqli_query($con,$query);
          $row = mysqli_fetch_assoc($result);
