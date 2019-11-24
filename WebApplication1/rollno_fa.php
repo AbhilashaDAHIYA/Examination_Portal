@@ -176,10 +176,15 @@
                             <td><input type="number" min="1" max="15" name="marks[]"></td>
                             <?php }
                        }
-                       else { ?>
+                       else {   if($row1['L'] == 0 && $row1['P'] !=0){ 
+                        ?> <td>20</td>
+                       <td><input type="number" min="1" max="20" name="marks[]"></td> 
+                        <?php }
+                        else { ?>
                        <td>10</td>
                        <td><input type="number" min="1" max="10" name="marks[]"></td> 
-                     <?php } ?>
+                     <?php } 
+                   } ?>
                       
                      </tr>
                     <?php

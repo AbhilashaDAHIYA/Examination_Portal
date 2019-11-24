@@ -83,7 +83,7 @@
             $result = mysqli_query($con,$sql);
             $obj = mysqli_fetch_row($result);
           //getting the databse name
-              if($obj[4] == 'B.Tech')
+                         if($obj[4] == 'B.Tech')
             {      
                     if($obj[5] == 'CSE')
                     { if( $obj[9] <= '07001012019'){
@@ -101,7 +101,8 @@
                                  $code = '24'.'_';
                     else if($obj[5] == 'MECH')
                                  $code = '25'.'_';
-            }
+            }else if($obj[4] == 'B.Arch'){
+                                    $code = '26'.'_';}
             else if($obj[4] == 'BBA'){
                                     $code = '27'.'_';
             }else if($obj[4] == 'MCA'){
@@ -157,10 +158,19 @@
                      <tr  style="background-color:grey; text-align:center;" >
                        <td><?php printf("%d",$index++) ?></td>
                        <td><?php printf("%s ", $row['rollno']); ?> </td> 
+                       <?php   $query1 = "SELECT * FROM `papers` WHERE Code = '$subcode' ";
+                               $result1 = mysqli_query($con,$query1);
+                              $row1 = mysqli_fetch_assoc($result1);
+                               if($row1['L'] == 0 && $row1['P'] !=0){ 
+                        ?> <td>20</td>
+                       <td><input type="number" min="1" max="20" name="marks[]"></td> 
+                        <?php }
+                        else { ?>
                        <td>30</td>
                        <td><input type="number" min="1" max="30" name="marks[]"></td> 
                      </tr> 
                     <?php
+                  }
                 }
            }
     ?> 

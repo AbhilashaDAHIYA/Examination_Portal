@@ -132,7 +132,10 @@ mysqli_free_result($result);
                   <th>Department</th>
                   <th>Semester</th>
                   <th>Roll No</th>
-                  <th>Mid term Marks</th>
+                  <?php  if($row1['L'] != 0) { ?>
+                        <th>Mid term Marks</th>
+                       <?php } ?>
+                 
                   <th>Faculty Assessment</th>
                   
                  <?php  if($row1['P'] != 0) { ?>
@@ -149,7 +152,8 @@ mysqli_free_result($result);
             <td><?php printf("%s ", $row['Branch']); ?></td>
             <td><?php printf("%s ", $row['Sem']); ?></td>
             <td><?php printf("%s To %s ", $row['RangeStart'],$row['RangeEnd']); ?></td>
-             <td><a href='rollno_midterm.php?id=<?=$i?>'>Mid Term</a></td>
+            <?php if($row1['L'] != 0)  { ?>
+             <td><a href='rollno_midterm.php?id=<?=$i?>'>Mid Term</a></td> <?php } ?>
             <td><a href='rollno_fa.php?id=<?=$i?>'>Faculty Assessment</a></td> 
                    <?php if($row1['P'] != 0) { ?>             <!-- if a practical part then show practical column else
                     not-->

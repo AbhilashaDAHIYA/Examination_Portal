@@ -76,7 +76,7 @@ th {
 <?php 
   //header( "refresh:0");
  session_start();
-$con = mysqli_connect('localhost','root','root','student');
+$con = mysqli_connect('localhost','root','','student');
 //mysqli_select_db($con,'assessmentportal');
 if($con === false) 
 {
@@ -378,8 +378,13 @@ while($obj = mysqli_fetch_row($result))
                               <td><?php  printf("%d",$index++); ?></td>
                                <td><?php  printf("%s",$obj[$i]); ?></td>
                                <td><?php  printf("%s",$obj[$i+1]); ?></td>
-							   <td><?php 
-                 if($obj[$i+4] == 0)
+							   <td><?php  $code = $obj[$i];
+                $query1 = "SELECT * FROM `papers` WHERE Code = '$code' ";
+                       $result1 = mysqli_query($con,$query1);
+                          $row1 = mysqli_fetch_assoc($result1);
+                    if($row1['P'] != 0 && $row1['L'] == 0) 
+                     printf("%s",'N/A');      
+                 else if($obj[$i+4] == 0)
                   printf("","");
                 else
                   printf("%d",$obj[$i+4]);

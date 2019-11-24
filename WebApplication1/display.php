@@ -153,9 +153,16 @@
                               }
                               else
                               {
-                                 if($row1['P'] != 0) 
+                                 if($row1['P'] != 0 && $row1['L'] != 0) 
                                {
                                       $sum = $obj1[$i+3] + (int)(($obj1[$i+4])/2)+ (int)(($obj1[$i+5])/2);
+                                      $res2 = "UPDATE `".$mysql_tb."` SET  ".$colname." = '".$sum."' WHERE rollno = $rollno";
+                                     $result2 = mysqli_query($con,$res2);
+
+                                 }
+                                 else if($row1['P'] != 0 && $row1['L'] == 0) 
+                               {
+                                      $sum = $obj1[$i+3] + $obj1[$i+5];
                                       $res2 = "UPDATE `".$mysql_tb."` SET  ".$colname." = '".$sum."' WHERE rollno = $rollno";
                                      $result2 = mysqli_query($con,$res2);
 
